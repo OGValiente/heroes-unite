@@ -13,28 +13,38 @@ MonoBehaviour:
   m_Name: HeroCollectionSO
   m_EditorClassIdentifier: 
   Heroes:
-  - Name: Hero 1
+  - Id: 0
+    Name: Hero 1
     Health: 100
     AttackPower: 1
     Experience: 0
     Level: 1
-  - Name: Hero 2
-    Health: 100
-    AttackPower: 0
-    Experience: 0
-    Level: 0
-  - Name: Hero 3
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Id: 1
+    Name: Hero 2
     Health: 100
     AttackPower: 1
     Experience: 0
     Level: 1
-  - Name: Hero 4
+    Color: {r: 1, g: 0, b: 0, a: 1}
+  - Id: 2
+    Name: Hero 3
     Health: 100
     AttackPower: 1
     Experience: 0
     Level: 1
-  - Name: Hero 5
+    Color: {r: 0, g: 1, b: 0.057691574, a: 1}
+  - Id: 3
+    Name: Hero 4
     Health: 100
     AttackPower: 1
     Experience: 0
     Level: 1
+    Color: {r: 0, g: 0.27430224, b: 1, a: 1}
+  - Id: 4
+    Name: Hero 5
+    Health: 100
+    AttackPower: 1
+    Experience: 0
+    Level: 1
+    Color: {r: 1, g: 0, b: 0.8197484, a: 1}

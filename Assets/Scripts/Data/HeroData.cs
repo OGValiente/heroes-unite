@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Hero
+public class HeroData
 {
+    public int Id;
     public string Name;
     public int Health;
     public int AttackPower;
-    public float Experience;
+    public int Experience;
     public int Level;
+    public Color Color;
 }
