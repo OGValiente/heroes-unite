@@ -13,19 +13,21 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
+        GameStateController.CurrentGameState = GameState.Idle;
+        
         PlayButton.onClick.AddListener(() =>
         {
             Prepare();
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene(Constants.GameScene);
         });
 
-        QuitButton.onClick.AddListener(() => { Application.Quit(); });
+        QuitButton.onClick.AddListener(Application.Quit);
     }
 
     private void Prepare()
     {
         // Get first three heroes
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             PlayerData.OwnedHeroes.Add(HeroCollection.Heroes[i]);
         }

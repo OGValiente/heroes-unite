@@ -14,9 +14,9 @@ public class Hero : MonoBehaviour
     public Button Button { get; set; }
     public HeroData HeroData { get; set; }
 
-    private bool isHeroSelected;
-    public Action OnHeroSelected;
-    public Action OnHeroDeselected;
+    public Action<Hero> OnHeroSelected;
+    public Action<Hero> OnHeroDeselected;
+    public bool IsSelected;
     
     private void Awake()
     {
@@ -61,35 +61,37 @@ public class Hero : MonoBehaviour
         HeroData = heroData;
     }
 
-    public void Select(bool isSelected)
+    public void Select(bool @select)
     {
-        // Temporary code for hero selection screen.
-        if (isSelected && isHeroSelected)
+        if (@select && IsSelected)
         {
-            OnHeroDeselected?.Invoke();
+            IsSelected = false;
+            OnHeroDeselected?.Invoke(this);
             heroSelectedOutline.SetActive(false);
             panel.Disable();
-            isHeroSelected = false;
             return;
         }
         
-        isHeroSelected = isSelected;
-        
+        if (@select)
+        {
+            IsSelected = true;
+            OnHeroSelected?.Invoke(this);
+            heroSelectedOutline.SetActive(true);
+            panel.Initialize(HeroData.Name, HeroData.Level, HeroData.AttackPower, HeroData.Experience);
+        }
+    }
+
+    public void SelectInBattle(bool isSelected)
+    {
         if (isSelected)
         {
-            OnHeroSelected?.Invoke();
             heroSelectedOutline.SetActive(true);
             panel.Initialize(HeroData.Name, HeroData.Level, HeroData.AttackPower, HeroData.Experience);
         }
         else
         {
-            // Re-enable later
-            //panel.Disable();
-            //heroSelectedOutline.SetActive(isSelected);
+            panel.Disable();
+            heroSelectedOutline.SetActive(isSelected);
         }
-        
-        // If GameState is "selection", allow multiple selections.
-        // If GameState is "battle", allow only 1 selection.
-        // Allow deselect in selection phase.
     }
 }
