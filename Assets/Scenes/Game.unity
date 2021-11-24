@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 411861507}
   - component: {fileID: 411861506}
   - component: {fileID: 411861505}
+  - component: {fileID: 411861509}
   m_Layer: 5
   m_Name: HeroSelectionCanvas
   m_TagString: Untagged
@@ -383,6 +384,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &411861509
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411861504}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &501264203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390,6 +403,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1517576646}
     m_Modifications:
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8582676876061174823, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
       propertyPath: m_Name
       value: Hero (1)
@@ -687,8 +708,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b7a996308308544a40bad7451ca25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroSelectionCanvas: {fileID: 411861504}
-  battleCanvas: {fileID: 2022970893}
+  heroSelectionCanvas: {fileID: 411861509}
+  battleCanvas: {fileID: 2022970895}
   heroSelectionPhaseController: {fileID: 1731887777}
   battlePhaseController: {fileID: 1517576647}
 --- !u!4 &591244653
@@ -780,6 +801,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1517576646}
     m_Modifications:
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8582676876061174823, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
       propertyPath: m_Name
       value: Hero (2)
@@ -942,7 +971,9 @@ MonoBehaviour:
   - {fileID: 1839602848}
   - {fileID: 501264205}
   - {fileID: 1306237182}
-  enemy: {fileID: 7150773895079952374}
+  currentEnemy: {fileID: 7150773895079952374}
+  enemySO: {fileID: 11400000, guid: 4c9f5c3f38d60db4495b808a06ef4620, type: 2}
+  attackButton: {fileID: 2062778245}
 --- !u!1 &1544739832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,6 +1179,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1517576646}
     m_Modifications:
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8582676876061174823, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
       propertyPath: m_Name
       value: Hero
@@ -1282,13 +1321,14 @@ GameObject:
   - component: {fileID: 2022970898}
   - component: {fileID: 2022970897}
   - component: {fileID: 2022970896}
+  - component: {fileID: 2022970895}
   m_Layer: 5
   m_Name: BattleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2022970894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1310,6 +1350,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &2022970895
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022970893}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &2022970896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1587,6 +1639,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8257954449888514567, guid: 2389af7131a92a74587371ba39dec96a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257954449888514567, guid: 2389af7131a92a74587371ba39dec96a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2389af7131a92a74587371ba39dec96a, type: 3}
 --- !u!114 &7150773895079952374 stripped
@@ -1607,6 +1667,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1731887776}
     m_Modifications:
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484281493973814319, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5552675816482594686, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8582676876061174823, guid: bd1160247d4fce446a1d0de5d7116e27, type: 3}
       propertyPath: m_Name
       value: Hero

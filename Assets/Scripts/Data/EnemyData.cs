@@ -8,4 +8,5 @@ public class EnemyData
 {
     public int AttackPower;
     public int Health;
+	public Color Color;
 }

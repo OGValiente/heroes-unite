@@ -9,8 +9,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject heroSelectionCanvas;
-    [SerializeField] private GameObject battleCanvas;
+    [SerializeField] private CanvasGroup heroSelectionCanvas;
+    [SerializeField] private CanvasGroup battleCanvas;
     [SerializeField] private HeroSelectionPhaseController heroSelectionPhaseController;
     [SerializeField] private BattlePhaseController battlePhaseController;
 
@@ -21,10 +21,11 @@ public class GameManager : MonoBehaviour
 
     private void PrepareBattle()
     {
-        heroSelectionCanvas.SetActive(false);
-        battleCanvas.SetActive(true);
+        heroSelectionCanvas.alpha = 0f;
+		battleCanvas.alpha = 1f;
         
         battlePhaseController.InitializeBattle(heroSelectionPhaseController.SelectedHeroes);
         GameStateController.CurrentGameState = GameState.Battle;
+		GameStateController.OnGameStateChanged.Invoke(GameState.Battle);
     }
 }

@@ -19,6 +19,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
     void Start()
     {
         GameStateController.CurrentGameState = GameState.HeroSelection;
+		GameStateController.OnGameStateChanged.Invoke(GameState.HeroSelection);
         InitHeroes();
         battleButton.onClick.AddListener(OnBattleButtonClicked.Invoke);
     }

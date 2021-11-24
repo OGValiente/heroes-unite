@@ -9,6 +9,7 @@ public class Hero : MonoBehaviour
 {
     [SerializeField] private GameObject heroSelectedOutline;
     [SerializeField] private FloatingHeroPanel panel;
+	[SerializeField] private HealthBar healthBar;
 
     private Image image;
     public Button Button { get; set; }
@@ -22,9 +23,15 @@ public class Hero : MonoBehaviour
     {
         Button = GetComponent<Button>();
         image = GetComponent<Image>();
-    }
+	}
 
-    public void SetHeroId(int id)
+	private void Start()
+	{
+		healthBar.SetActive(false);
+		GameStateController.OnGameStateChanged += OnGameStateChanged;
+	}
+
+	public void SetHeroId(int id)
     {
         HeroData.Id = id;
     }
@@ -59,11 +66,13 @@ public class Hero : MonoBehaviour
     public void SetHeroData(HeroData heroData)
     {
         HeroData = heroData;
-    }
+		healthBar.slider.maxValue = heroData.Health;
+		healthBar.slider.value = heroData.Health;
+	}
 
-    public void Select(bool @select)
+    public void Select(bool select)
     {
-        if (@select && IsSelected)
+        if (select && IsSelected)
         {
             IsSelected = false;
             OnHeroDeselected?.Invoke(this);
@@ -72,7 +81,7 @@ public class Hero : MonoBehaviour
             return;
         }
         
-        if (@select)
+        if (select)
         {
             IsSelected = true;
             OnHeroSelected?.Invoke(this);
@@ -94,4 +103,9 @@ public class Hero : MonoBehaviour
             heroSelectedOutline.SetActive(isSelected);
         }
     }
+
+	private void OnGameStateChanged(GameState state)
+	{
+		healthBar.SetActive(state == GameState.Battle);
+	}
 }
