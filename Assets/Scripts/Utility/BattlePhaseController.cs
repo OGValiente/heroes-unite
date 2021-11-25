@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -80,6 +81,12 @@ public class BattlePhaseController : MonoBehaviour
 	{
 		// TODO: Do tween towards enemy, attack/slash animation. Show damage dealt on top of the enemy.
 		battleState = BattleState.Attacking;
+		var oriPos = hero.transform.position;
+		hero.transform
+			.DOMove(currentEnemy.transform.position, 1f)
+			.SetEase(Ease.InOutCirc)
+			.From();
+
 		currentEnemy.OnAttacked?.Invoke(hero.Data.AttackPower);
 
 		battleState = BattleState.EnemyTurn;

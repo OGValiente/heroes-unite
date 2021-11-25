@@ -22,29 +22,64 @@ MonoBehaviour:
     Color: {r: 1, g: 1, b: 1, a: 1}
   - Id: 1
     Name: Hero 2
-    Health: 100
+    Health: 90
     AttackPower: 2
     Experience: 0
     Level: 1
     Color: {r: 1, g: 0, b: 0, a: 1}
   - Id: 2
     Name: Hero 3
-    Health: 100
+    Health: 80
     AttackPower: 3
     Experience: 0
     Level: 1
     Color: {r: 0, g: 1, b: 0.057691574, a: 1}
   - Id: 3
     Name: Hero 4
-    Health: 100
+    Health: 75
     AttackPower: 4
     Experience: 0
     Level: 1
     Color: {r: 0, g: 0.27430224, b: 1, a: 1}
   - Id: 4
     Name: Hero 5
-    Health: 100
+    Health: 60
     AttackPower: 5
     Experience: 0
     Level: 1
-    Color: {r: 1, g: 0, b: 0.8197484, a: 1}
+    Color: {r: 0.5447297, g: 0, b: 1, a: 1}
+  - Id: 5
+    Name: Hero 6
+    Health: 50
+    AttackPower: 6
+    Experience: 0
+    Level: 1
+    Color: {r: 0.27386704, g: 0.024474904, b: 0.4716981, a: 1}
+  - Id: 6
+    Name: Hero 7
+    Health: 75
+    AttackPower: 5
+    Experience: 0
+    Level: 1
+    Color: {r: 0, g: 0.73424315, b: 1, a: 1}
+  - Id: 7
+    Name: Hero 8
+    Health: 40
+    AttackPower: 8
+    Experience: 0
+    Level: 1
+    Color: {r: 1, g: 0.99701774, b: 0, a: 1}
+  - Id: 8
+    Name: Hero 9
+    Health: 100
+    AttackPower: 2
+    Experience: 0
+    Level: 1
+    Color: {r: 1, g: 0.5523083, b: 0, a: 1}
+  - Id: 9
+    Name: Hero 10
+    Health: 25
+    AttackPower: 10
+    Experience: 0
+    Level: 1
+    Color: {r: 0, g: 0, b: 0, a: 1}
