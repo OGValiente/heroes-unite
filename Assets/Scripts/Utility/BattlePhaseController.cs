@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BattlePhaseController : MonoBehaviour
 {
@@ -14,9 +17,13 @@ public class BattlePhaseController : MonoBehaviour
 	private Hero selectedHero;
 	private BattleState battleState;
 
-    public void InitializeBattle(List<Hero> selectedHeroes)
+	private void Start()
 	{
 		attackButton.onClick.AddListener(() => AttackEnemy(selectedHero));
+	}
+
+	public void InitializeBattle(List<Hero> selectedHeroes)
+	{
 		InitHeroes(selectedHeroes);
         InitEnemy();
 		
@@ -33,10 +40,10 @@ public class BattlePhaseController : MonoBehaviour
     {
         for (int i = 0; i < heroSlots.Count; i++)
         {
-            heroSlots[i].SetHeroData(selectedHeroes[i].HeroData);
-            heroSlots[i].SetHeroColor(selectedHeroes[i].HeroData.Color);
+            heroSlots[i].SetHeroData(selectedHeroes[i].Data);
+            heroSlots[i].SetHeroColor(selectedHeroes[i].Data.Color);
             
-            var id = selectedHeroes[i].HeroData.Id;
+            var id = selectedHeroes[i].Data.Id;
             heroSlots[i].Button.onClick.AddListener(() =>
             {
                 HandleSelection(id);
@@ -48,7 +55,7 @@ public class BattlePhaseController : MonoBehaviour
     {
         foreach (var hero in heroSlots)
         {
-            var select = hero.HeroData.Id == id; 
+            var select = hero.Data.Id == id; 
             hero.SelectInBattle(select);
 
 			if (select)
@@ -65,14 +72,55 @@ public class BattlePhaseController : MonoBehaviour
         {
             hero.Button.interactable = allowed;
         }
-    }
+
+		attackButton.interactable = allowed;
+	}
 
 	private void AttackEnemy(Hero hero)
 	{
-		battleState = BattleState.Attacking;
 		// TODO: Do tween towards enemy, attack/slash animation. Show damage dealt on top of the enemy.
-		Debug.LogWarning($"{hero.HeroData.Name} deals {hero.HeroData.AttackPower} to Enemy");
-		Debug.LogWarning($"Enemy is left with {currentEnemy.EnemyData.Health} - {hero.HeroData.AttackPower} = {currentEnemy.EnemyData.Health - hero.HeroData.AttackPower} HP");
-		currentEnemy.OnAttacked?.Invoke(hero.HeroData.AttackPower);
+		battleState = BattleState.Attacking;
+		currentEnemy.OnAttacked?.Invoke(hero.Data.AttackPower);
+
+		battleState = BattleState.EnemyTurn;
+		PassTurn();
+	}
+
+	private void PassTurn()
+	{
+		if (battleState == BattleState.EnemyTurn)
+		{
+			SetInteraction(false);
+			var heroToAttack = PickRandomHero();
+			while (!heroToAttack.IsAlive)
+			{
+				heroToAttack = PickRandomHero();
+			}
+			AttackHero(heroToAttack);
+		}
+		else
+		{
+			SetInteraction(true);
+		}
+	}
+
+	private void AttackHero(Hero hero)
+	{
+		currentEnemy.Attack(hero);
+
+		if (hero.Data.Health < 1)
+		{
+			// Dead
+			hero.gameObject.SetActive(false);
+		}
+
+		battleState = BattleState.PlayerTurn;
+		PassTurn();
+	}
+
+	private Hero PickRandomHero()
+	{
+		var heroIndex = Random.Range(0, heroSlots.Count);
+		return heroSlots[heroIndex];
 	}
 }

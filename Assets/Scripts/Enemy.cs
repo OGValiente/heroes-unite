@@ -8,11 +8,12 @@ public class Enemy : MonoBehaviour
 {
 	[SerializeField] private HealthBar healthBar;
 	
-    public EnemyData EnemyData { get; set; }
-    public Action OnAttack;
+    public EnemyData Data { get; set; }
+    public Action<int> OnAttack;
     public Action<int> OnAttacked;
 
 	private Image image;
+	private int remainingHealth;
 
 	private void Awake()
 	{
@@ -24,39 +25,45 @@ public class Enemy : MonoBehaviour
 		OnAttacked += OnEnemyAttacked;
 	}
 
-	public void Attack()
+	public void Attack(Hero hero)
     {
-        // TODO: Pick a random hero from the battlefield and attack.
-        OnAttack?.Invoke();
+		// TODO: Do tween towards hero.
+		hero.SetHeroHealth(hero.Data.Health - Data.AttackPower);
+        OnAttack?.Invoke(Data.AttackPower);
     }
 
     public void SetEnemyData(EnemyData data)
     {
-        EnemyData = data;
+        Data = data;
 		healthBar.slider.maxValue = data.Health;
 		healthBar.slider.value = data.Health;
+		remainingHealth = data.Health;
 	}
 
     public void SetEnemyHealth(int health)
     {
-        EnemyData.Health = health;
+		remainingHealth = health;
     }
 
     public void SetEnemyAttackPower(int power)
     {
-        EnemyData.AttackPower = power;
+        Data.AttackPower = power;
     }
 
 	public void SetEnemyColor(Color color)
 	{
-		EnemyData.Color = color;
+		Data.Color = color;
 		image.color = color;
 	}
 
 	private void OnEnemyAttacked(int damageDealt)
 	{
-		var remainingHealth = EnemyData.Health - damageDealt;
+		remainingHealth -= damageDealt;
 		healthBar.SetHealth(remainingHealth);
-		SetEnemyHealth(remainingHealth);
+
+		if (remainingHealth < 1)
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }

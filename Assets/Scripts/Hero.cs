@@ -13,11 +13,12 @@ public class Hero : MonoBehaviour
 
     private Image image;
     public Button Button { get; set; }
-    public HeroData HeroData { get; set; }
+    public HeroData Data { get; set; }
 
     public Action<Hero> OnHeroSelected;
     public Action<Hero> OnHeroDeselected;
     public bool IsSelected;
+	public bool IsAlive => Data.Health > 0;
     
     private void Awake()
     {
@@ -33,39 +34,40 @@ public class Hero : MonoBehaviour
 
 	public void SetHeroId(int id)
     {
-        HeroData.Id = id;
+        Data.Id = id;
     }
 
     public void SetHeroName(string name)
     {
-        HeroData.Name = name;
+        Data.Name = name;
     }
 
     public void SetHeroHealth(int health)
     {
-        HeroData.Health = health;
+        Data.Health = health;
+		healthBar.SetHealth(health);
     }
 
     public void SetHeroAttackPower(int attackPower)
     {
-        HeroData.AttackPower = attackPower;
+        Data.AttackPower = attackPower;
     }
 
     public void SetHeroLevel(int level, int experience)
     {
-        HeroData.Level = level; 
-        HeroData.Experience = experience;
+        Data.Level = level; 
+        Data.Experience = experience;
     }
 
     public void SetHeroColor(Color color)
     {
-        HeroData.Color = color;
+        Data.Color = color;
         image.color = color;
     }
 
     public void SetHeroData(HeroData heroData)
     {
-        HeroData = heroData;
+        Data = heroData;
 		healthBar.slider.maxValue = heroData.Health;
 		healthBar.slider.value = heroData.Health;
 	}
@@ -86,7 +88,7 @@ public class Hero : MonoBehaviour
             IsSelected = true;
             OnHeroSelected?.Invoke(this);
             heroSelectedOutline.SetActive(true);
-            panel.Initialize(HeroData.Name, HeroData.Level, HeroData.AttackPower, HeroData.Experience);
+            panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
         }
     }
 
@@ -95,7 +97,7 @@ public class Hero : MonoBehaviour
         if (isSelected)
         {
             heroSelectedOutline.SetActive(true);
-            panel.Initialize(HeroData.Name, HeroData.Level, HeroData.AttackPower, HeroData.Experience);
+            panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
         }
         else
         {

@@ -31,7 +31,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
             var hero = Instantiate(heroPrototype, this.transform);
             hero.SetHeroData(ownedHero);
             hero.SetHeroColor(ownedHero.Color);
-            hero.Button.onClick.AddListener(() => HandleSelection(hero.HeroData.Id));
+            hero.Button.onClick.AddListener(() => HandleSelection(hero.Data.Id));
             hero.OnHeroSelected += OnHeroSelected;
             hero.OnHeroDeselected += OnHeroDeselected;
             heroes.Add(hero);
@@ -44,7 +44,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
     {
         foreach (var hero in heroes)
         {
-            var select = hero.HeroData.Id == id; 
+            var select = hero.Data.Id == id; 
             hero.Select(select);
         }
     }
