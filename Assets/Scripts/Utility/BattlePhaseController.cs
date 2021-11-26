@@ -16,6 +16,8 @@ public class BattlePhaseController : MonoBehaviour
 	[SerializeField] private Button attackButton;
 
 	private Hero selectedHero;
+	private int battlesMade;
+	private List<Hero> aliveHeroes = new List<Hero>(3);
 
 	private void Start()
 	{
@@ -84,7 +86,17 @@ public class BattlePhaseController : MonoBehaviour
 
 	private void DoEnemyAttack(Hero hero)
 	{
-		enemy.Attack(hero, () => PassTurn(BattleState.PlayerTurn));
+		enemy.Attack(hero, () =>
+		{
+			if (aliveHeroes.Count == 0)
+			{
+				// Game Over
+				Debug.LogError("GAME OVER");
+				Time.timeScale = 0f;
+				return;
+			}
+			PassTurn(BattleState.PlayerTurn);
+		});
 	}
 
 	public void SetInteraction(bool allowed)
@@ -100,10 +112,10 @@ public class BattlePhaseController : MonoBehaviour
 		attackButton.interactable = allowed;
 	}
 
-	private Hero PickRandomHero()
+	private Hero PickRandomHero(List<Hero> aliveHeroes)
 	{
-		var heroIndex = Random.Range(0, heroSlots.Count);
-		return heroSlots[heroIndex];
+		var heroIndex = Random.Range(0, aliveHeroes.Count);
+		return aliveHeroes[heroIndex];
 	}
 
 	private void PassTurn(BattleState nextState)
@@ -112,12 +124,16 @@ public class BattlePhaseController : MonoBehaviour
 		
 		if (BattleStateController.CurrentBattleState == BattleState.EnemyTurn)
 		{
-			var heroToAttack = PickRandomHero();
-			while (!heroToAttack.IsAlive)
+			aliveHeroes.Clear();
+			foreach (var hero in heroSlots)
 			{
-				heroToAttack = PickRandomHero();
+				if (hero.IsAlive)
+				{
+					aliveHeroes.Add(hero);
+				}
 			}
-
+			
+			var heroToAttack = PickRandomHero(aliveHeroes);
 			DoEnemyAttack(heroToAttack);
 		}
 	}
