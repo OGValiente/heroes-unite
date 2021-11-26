@@ -79,18 +79,30 @@ public class BattlePhaseController : MonoBehaviour
 
 	private void AttackEnemy(Hero hero)
 	{
-		// TODO: Do tween towards enemy, attack/slash animation. Show damage dealt on top of the enemy.
 		battleState = BattleState.Attacking;
-		var oriPos = hero.transform.position;
-		hero.transform
-			.DOMove(currentEnemy.transform.position, 1f)
-			.SetEase(Ease.InOutCirc)
-			.From();
-
+		
+		DoHeroAttack(hero);
+		
 		currentEnemy.OnAttacked?.Invoke(hero.Data.AttackPower);
 
 		battleState = BattleState.EnemyTurn;
 		PassTurn();
+	}
+
+	private void DoHeroAttack(Hero hero)
+	{		
+		var oriPos = hero.transform.position;
+		var offset = new Vector3(2, 0, 0);
+		var targetPos = currentEnemy.transform.position - offset;
+		hero.transform
+			.DOMove(targetPos, .75f)
+			.SetEase(Ease.InBack).OnComplete(() =>
+			{
+				hero.transform
+					.DOMove(oriPos, .75f)
+					.SetEase(Ease.OutQuart)
+					.SetDelay(.1f);
+			});
 	}
 
 	private void PassTurn()
