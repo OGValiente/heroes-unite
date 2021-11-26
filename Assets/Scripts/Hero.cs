@@ -33,15 +33,12 @@ public class Hero : MonoBehaviour
 		GameStateController.OnGameStateChanged += OnGameStateChanged;
 	}
 
-	public void SetHeroId(int id)
-    {
-        Data.Id = id;
-    }
-
-    public void SetHeroName(string name)
-    {
-        Data.Name = name;
-    }
+	public void SetHeroData(HeroData heroData)
+	{
+		Data = heroData;
+		healthBar.slider.maxValue = heroData.Health;
+		healthBar.slider.value = heroData.Health;
+	}
 
     public void SetHeroHealth(int health)
     {
@@ -65,13 +62,6 @@ public class Hero : MonoBehaviour
         Data.Color = color;
         image.color = color;
     }
-
-    public void SetHeroData(HeroData heroData)
-    {
-        Data = heroData;
-		healthBar.slider.maxValue = heroData.Health;
-		healthBar.slider.value = heroData.Health;
-	}
 
     public void Select(bool select)
     {

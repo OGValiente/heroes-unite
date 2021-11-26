@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 		battleCanvas.alpha = 1f;
         
         battlePhaseController.InitializeBattle(heroSelectionPhaseController.SelectedHeroes);
-        GameStateController.CurrentGameState = GameState.Battle;
-		GameStateController.OnGameStateChanged.Invoke(GameState.Battle);
+        GameStateController.ChangeGameState(GameState.Battle);
     }
 }

@@ -13,7 +13,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
-        GameStateController.CurrentGameState = GameState.Idle;
+        GameStateController.ChangeGameState(GameState.Idle);
         
         PlayButton.onClick.AddListener(() =>
         {

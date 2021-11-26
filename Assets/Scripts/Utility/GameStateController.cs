@@ -5,6 +5,12 @@ using UnityEngine;
 
 public static class GameStateController
 {
-    public static GameState CurrentGameState { get; set; }
+	public static GameState CurrentGameState { get; private set; }
 	public static Action<GameState> OnGameStateChanged;
+
+	public static void ChangeGameState(GameState state)
+	{
+		CurrentGameState = state;
+		OnGameStateChanged?.Invoke(state);
+	}
 }
