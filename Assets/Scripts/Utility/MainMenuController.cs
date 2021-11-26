@@ -26,8 +26,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Prepare()
     {
-        // Get first three heroes
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < HeroCollection.Heroes.Length; i++)
         {
             PlayerData.OwnedHeroes.Add(HeroCollection.Heroes[i]);
         }

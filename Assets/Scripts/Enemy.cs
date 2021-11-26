@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,36 +26,46 @@ public class Enemy : MonoBehaviour
 		OnAttacked += OnEnemyAttacked;
 	}
 
-	public void Attack(Hero hero)
-    {
-		// TODO: Do tween towards hero.
-		hero.SetHeroHealth(hero.Data.Health - Data.AttackPower);
-        OnAttack?.Invoke(Data.AttackPower);
-    }
-
-    public void SetEnemyData(EnemyData data)
-    {
-        Data = data;
+	public void SetEnemyData(EnemyData data)
+	{
+		Data = data;
 		healthBar.slider.maxValue = data.Health;
 		healthBar.slider.value = data.Health;
 		remainingHealth = data.Health;
 	}
-
-    public void SetEnemyHealth(int health)
-    {
-		remainingHealth = health;
-    }
-
-    public void SetEnemyAttackPower(int power)
-    {
-        Data.AttackPower = power;
-    }
 
 	public void SetEnemyColor(Color color)
 	{
 		Data.Color = color;
 		image.color = color;
 	}
+
+	public void Attack(Hero hero, Action onAnimComplete)
+    {
+		var oriPos = transform.position;
+		var offset = new Vector3(2, 0, 0);
+		var targetPos = hero.transform.position + offset; 
+		transform
+			.DOMove(targetPos, .75f)
+			.SetEase(Ease.InBack)
+			.OnComplete(() =>
+			{
+				// TODO: Add damage dealt indicator
+				// TODO: Add strike particle/animation
+				// TODO: Add screen shake
+				OnAttack?.Invoke(Data.AttackPower);
+				hero.SetHeroHealth(hero.Data.Health - Data.AttackPower);
+				if (hero.Data.Health < 1)
+				{
+					hero.gameObject.SetActive(false);
+				}
+				transform
+					.DOMove(oriPos, .75f)
+					.SetEase(Ease.OutQuart)
+					.SetDelay(.05f)
+					.OnComplete(() => onAnimComplete.Invoke());
+			});
+    }
 
 	private void OnEnemyAttacked(int damageDealt)
 	{

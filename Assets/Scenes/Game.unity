@@ -971,7 +971,7 @@ MonoBehaviour:
   - {fileID: 1839602848}
   - {fileID: 501264205}
   - {fileID: 1306237182}
-  currentEnemy: {fileID: 7150773895079952374}
+  enemy: {fileID: 7150773895079952374}
   enemySO: {fileID: 11400000, guid: 4c9f5c3f38d60db4495b808a06ef4620, type: 2}
   attackButton: {fileID: 2062778245}
 --- !u!1 &1544739832

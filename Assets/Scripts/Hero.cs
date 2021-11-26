@@ -97,6 +97,28 @@ public class Hero : MonoBehaviour
         }
     }
 
+	public void Attack(Enemy enemy, Action onAnimComplete)
+	{
+		var oriPos = transform.position;
+		var offset = new Vector3(2, 0, 0);
+		var targetPos = enemy.transform.position - offset;
+		transform
+			.DOMove(targetPos, .75f)
+			.SetEase(Ease.InBack)
+			.OnComplete(() =>
+			{
+				// TODO: Add damage dealt indicator
+				// TODO: Add strike particle/animation
+				// TODO: Add screen shake
+				enemy.OnAttacked?.Invoke(Data.AttackPower);
+				transform
+					.DOMove(oriPos, .75f)
+					.SetEase(Ease.OutQuart)
+					.SetDelay(.05f)
+					.OnComplete(() => onAnimComplete.Invoke());
+			});
+	}
+
 	private void OnGameStateChanged(GameState state)
 	{
 		healthBar.SetActive(state == GameState.Battle);

@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class BattlePhaseController : MonoBehaviour
 {
 	[SerializeField] private List<Hero> heroSlots;
-	[SerializeField] private Enemy currentEnemy;
+	[SerializeField] private Enemy enemy;
 	[SerializeField] private EnemySO enemySO;
 	[SerializeField] private Button attackButton;
 
@@ -29,6 +29,7 @@ public class BattlePhaseController : MonoBehaviour
 		InitEnemy();
 
 		BattleStateController.SetBattleState(BattleState.PlayerTurn);
+		attackButton.interactable = false;
 	}
 
 	private void InitHeroes(List<Hero> selectedHeroes)
@@ -51,8 +52,8 @@ public class BattlePhaseController : MonoBehaviour
 
 	private void InitEnemy()
 	{
-		var enemy = enemySO.Enemies[0];
-		currentEnemy.SetEnemyData(enemy);
+		var enemyData = enemySO.Enemies[0];
+		enemy.SetEnemyData(enemyData);
 	}
 
 	private void HandleSelection(int id)
@@ -78,37 +79,12 @@ public class BattlePhaseController : MonoBehaviour
 
 	private void DoHeroAttack(Hero hero)
 	{
-		var oriPos = hero.transform.position;
-		var offset = new Vector3(2, 0, 0);
-		var targetPos = currentEnemy.transform.position - offset;
-		hero.transform
-			.DOMove(targetPos, .75f)
-			.SetEase(Ease.InBack)
-			.OnComplete(() =>
-			{
-				// TODO: Add damage dealt indicator
-				// TODO: Add strike particle/animation
-				// TODO: Add screen shake
-				currentEnemy.OnAttacked?.Invoke(hero.Data.AttackPower);
-				hero.transform
-					.DOMove(oriPos, .75f)
-					.SetEase(Ease.OutQuart)
-					.SetDelay(.05f)
-					.OnComplete(() => PassTurn(BattleState.EnemyTurn));
-			});
+		hero.Attack(enemy, () => PassTurn(BattleState.EnemyTurn));
 	}
 
 	private void DoEnemyAttack(Hero hero)
 	{
-		currentEnemy.Attack(hero);
-
-		if (hero.Data.Health < 1)
-		{
-			// Dead
-			hero.gameObject.SetActive(false);
-		}
-
-		PassTurn(BattleState.PlayerTurn);
+		enemy.Attack(hero, () => PassTurn(BattleState.PlayerTurn));
 	}
 
 	public void SetInteraction(bool allowed)
