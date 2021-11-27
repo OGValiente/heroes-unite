@@ -6,4 +6,5 @@ public static class Constants
 {
     public const string MainMenuScene = "MainMenu";
     public const string GameScene = "Game";
+	public const int InitialHeroCount = 3;
 }

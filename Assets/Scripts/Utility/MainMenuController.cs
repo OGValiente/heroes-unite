@@ -13,7 +13,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
-        GameStateController.ChangeGameState(GameState.Idle);
+        GameStateController.SetGameState(GameState.Idle);
         
         PlayButton.onClick.AddListener(() =>
         {
@@ -26,7 +26,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Prepare()
     {
-        for (int i = 0; i < HeroCollection.Heroes.Length; i++)
+        for (int i = 0; i < Constants.InitialHeroCount; i++)
         {
             PlayerData.OwnedHeroes.Add(HeroCollection.Heroes[i]);
         }

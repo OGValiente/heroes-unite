@@ -16,6 +16,7 @@ public class Hero : MonoBehaviour
     public Button Button { get; set; }
     public HeroData Data { get; set; }
 
+	private const int expRequiredToLevelUp = 5;
     public Action<Hero> OnHeroSelected;
     public Action<Hero> OnHeroDeselected;
     public bool IsSelected;
@@ -44,18 +45,29 @@ public class Hero : MonoBehaviour
     {
         Data.Health = health;
 		healthBar.SetHealth(health);
+		
+		if (Data.Health < 1)
+		{
+			gameObject.SetActive(false);
+		}
     }
 
-    public void SetHeroAttackPower(int attackPower)
-    {
-        Data.AttackPower = attackPower;
+    public void IncrementHeroExperience()
+	{
+		Data.Experience++;
+		if (Data.Experience == expRequiredToLevelUp)
+		{
+			LevelUp();
+			Data.Experience = 0;
+		}
     }
 
-    public void SetHeroLevel(int level, int experience)
-    {
-        Data.Level = level; 
-        Data.Experience = experience;
-    }
+	private void LevelUp()
+	{
+		Data.Level++;
+		Data.Health *= 11 / 10;
+		Data.AttackPower *= 11 / 10;
+	}
 
     public void SetHeroColor(Color color)
     {
@@ -97,7 +109,7 @@ public class Hero : MonoBehaviour
         }
     }
 
-	public void Attack(Enemy enemy, Action onAnimComplete)
+	public void Attack(Enemy enemy, Action<bool> onAnimComplete)
 	{
 		var oriPos = transform.position;
 		var offset = new Vector3(2, 0, 0);
@@ -115,7 +127,7 @@ public class Hero : MonoBehaviour
 					.DOMove(oriPos, .75f)
 					.SetEase(Ease.OutQuart)
 					.SetDelay(.05f)
-					.OnComplete(() => onAnimComplete.Invoke());
+					.OnComplete(() => onAnimComplete.Invoke(enemy.IsDead));
 			});
 	}
 

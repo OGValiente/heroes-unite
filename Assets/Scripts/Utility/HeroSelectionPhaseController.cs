@@ -14,16 +14,19 @@ public class HeroSelectionPhaseController : MonoBehaviour
     private List<Hero> heroes = new List<Hero>(PlayerData.OwnedHeroes.Capacity);
     private int selectionCount;
     public List<Hero> SelectedHeroes;
-    public Action OnBattleButtonClicked;
+	public Button BattleButton => battleButton;
 
     void Start()
     {
-        GameStateController.ChangeGameState(GameState.HeroSelection);
-        InitHeroes();
-		battleButton.onClick.AddListener(OnBattleButtonClicked.Invoke);
+        GameStateController.SetGameState(GameState.HeroSelection);
     }
 
-    private void InitHeroes()
+	public void InitializeHeroSelection()
+	{
+		InitHeroes();
+	}
+
+	private void InitHeroes()
     {
         foreach (var ownedHero in PlayerData.OwnedHeroes)
         {

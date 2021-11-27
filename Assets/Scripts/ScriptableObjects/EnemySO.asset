@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemySO
   m_EditorClassIdentifier: 
   Enemies:
-  - AttackPower: 50
-    Health: 20
+  - AttackPower: 10
+    Health: 3
     Color: {r: 1, g: 0, b: 0, a: 1}
   - AttackPower: 20
     Health: 15

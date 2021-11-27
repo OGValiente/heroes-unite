@@ -18,6 +18,8 @@ public class BattlePhaseController : MonoBehaviour
 	private Hero selectedHero;
 	private int battlesMade;
 	private List<Hero> aliveHeroes = new List<Hero>(3);
+	public Action<List<Hero>> OnBattleWon;
+	public Action OnBattleLost;
 
 	private void Start()
 	{
@@ -81,20 +83,35 @@ public class BattlePhaseController : MonoBehaviour
 
 	private void DoHeroAttack(Hero hero)
 	{
-		hero.Attack(enemy, () => PassTurn(BattleState.EnemyTurn));
+		hero.Attack(enemy, (bool dead) =>
+		{
+			if (dead)
+			{
+				OnBattleWon?.Invoke(aliveHeroes);
+				GameStateController.SetGameState(GameState.Result);
+				return;
+			}
+			
+			PassTurn(BattleState.EnemyTurn);
+		});
 	}
 
 	private void DoEnemyAttack(Hero hero)
 	{
-		enemy.Attack(hero, () =>
+		enemy.Attack(hero, (bool dead) =>
 		{
+			if (dead)
+			{
+				aliveHeroes.Remove(hero);
+			}
+			
 			if (aliveHeroes.Count == 0)
 			{
-				// Game Over
-				Debug.LogError("GAME OVER");
-				Time.timeScale = 0f;
+				OnBattleLost?.Invoke();
+				GameStateController.SetGameState(GameState.Result);
 				return;
 			}
+			
 			PassTurn(BattleState.PlayerTurn);
 		});
 	}
@@ -108,8 +125,13 @@ public class BattlePhaseController : MonoBehaviour
 				hero.Button.interactable = allowed;
 			}
 		}
-
+		
 		attackButton.interactable = allowed;
+
+		if (selectedHero != null && !selectedHero.IsAlive)
+		{
+			attackButton.interactable = false;
+		}
 	}
 
 	private Hero PickRandomHero(List<Hero> aliveHeroes)

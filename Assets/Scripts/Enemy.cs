@@ -9,12 +9,13 @@ public class Enemy : MonoBehaviour
 {
 	[SerializeField] private HealthBar healthBar;
 	
-    public EnemyData Data { get; set; }
+    public EnemyData Data { get; private set; }
     public Action<int> OnAttack;
     public Action<int> OnAttacked;
 
 	private Image image;
 	private int remainingHealth;
+	public bool IsDead => remainingHealth <= 0;
 
 	private void Awake()
 	{
@@ -40,7 +41,7 @@ public class Enemy : MonoBehaviour
 		image.color = color;
 	}
 
-	public void Attack(Hero hero, Action onAnimComplete)
+	public void Attack(Hero hero, Action<bool> onAnimComplete)
     {
 		var oriPos = transform.position;
 		var offset = new Vector3(2, 0, 0);
@@ -55,15 +56,11 @@ public class Enemy : MonoBehaviour
 				// TODO: Add screen shake
 				OnAttack?.Invoke(Data.AttackPower);
 				hero.SetHeroHealth(hero.Data.Health - Data.AttackPower);
-				if (hero.Data.Health < 1)
-				{
-					hero.gameObject.SetActive(false);
-				}
 				transform
 					.DOMove(oriPos, .75f)
 					.SetEase(Ease.OutQuart)
 					.SetDelay(.05f)
-					.OnComplete(() => onAnimComplete.Invoke());
+					.OnComplete(() => onAnimComplete.Invoke(!hero.IsAlive));
 			});
     }
 
