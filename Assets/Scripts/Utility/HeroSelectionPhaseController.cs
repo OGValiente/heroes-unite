@@ -10,9 +10,9 @@ public class HeroSelectionPhaseController : MonoBehaviour
 {
     [SerializeField] private Hero heroPrototype;
     [SerializeField] private Button battleButton;
-    
-    private List<Hero> heroes = new List<Hero>(PlayerData.OwnedHeroes.Capacity);
-    private int selectionCount;
+
+	private Dictionary<int, Hero> heroes = new Dictionary<int, Hero>(PlayerData.OwnedHeroes.Capacity);
+	private int selectionCount;
     public List<Hero> SelectedHeroes;
 	public Button BattleButton => battleButton;
 
@@ -23,6 +23,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
 
 	public void InitializeHeroSelection()
 	{
+		heroPrototype.gameObject.SetActive(true);
 		InitHeroes();
 	}
 
@@ -30,24 +31,29 @@ public class HeroSelectionPhaseController : MonoBehaviour
     {
         foreach (var ownedHero in PlayerData.OwnedHeroes)
         {
+			if (heroes.ContainsKey(ownedHero.Id))
+			{
+				continue;
+			}
+			
             var hero = Instantiate(heroPrototype, this.transform);
             hero.SetHeroData(ownedHero);
             hero.SetHeroColor(ownedHero.Color);
             hero.Button.onClick.AddListener(() => HandleSelection(hero.Data.Id));
             hero.OnHeroSelected += OnHeroSelected;
             hero.OnHeroDeselected += OnHeroDeselected;
-            heroes.Add(hero);
+            heroes.Add(hero.Data.Id, hero);
         }
-        
-        heroPrototype.gameObject.SetActive(false);
+		
+		heroPrototype.gameObject.SetActive(false);
     }
 
     private void HandleSelection(int id)
     {
         foreach (var hero in heroes)
         {
-            var select = hero.Data.Id == id; 
-            hero.Select(select);
+            var select = hero.Value.Data.Id == id; 
+            hero.Value.Select(select);
         }
     }
 
@@ -55,7 +61,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
     {
         foreach (var hero in heroes)
         {
-            hero.Button.interactable = allowed ? true : hero.IsSelected;
+            hero.Value.Button.interactable = allowed ? true : hero.Value.IsSelected;
         }
     }
     

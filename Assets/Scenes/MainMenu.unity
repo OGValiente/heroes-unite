@@ -666,9 +666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376af4b07bf6aee4a83b1da1d414f926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayButton: {fileID: 2025116946}
-  QuitButton: {fileID: 56761297}
-  HeroCollection: {fileID: 11400000, guid: 06ba9419eaf0f254f8a03a82a9303edf, type: 2}
+  playButton: {fileID: 2025116946}
+  quitButton: {fileID: 56761297}
+  heroCollection: {fileID: 11400000, guid: 06ba9419eaf0f254f8a03a82a9303edf, type: 2}
 --- !u!1 &2020258883
 GameObject:
   m_ObjectHideFlags: 0

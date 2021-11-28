@@ -791,6 +791,7 @@ MonoBehaviour:
   heroSelectionPhaseController: {fileID: 1731887777}
   battlePhaseController: {fileID: 1517576647}
   battleResultPanel: {fileID: 1908583140}
+  heroCollection: {fileID: 11400000, guid: 06ba9419eaf0f254f8a03a82a9303edf, type: 2}
 --- !u!4 &591244653
 Transform:
   m_ObjectHideFlags: 0

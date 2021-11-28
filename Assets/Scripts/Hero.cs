@@ -11,22 +11,17 @@ public class Hero : MonoBehaviour
     [SerializeField] private GameObject heroSelectedOutline;
     [SerializeField] private FloatingHeroPanel panel;
 	[SerializeField] private HealthBar healthBar;
+	[SerializeField] private Image image;
+	[SerializeField] private Button button;
 
-    private Image image;
-    public Button Button { get; set; }
     public HeroData Data { get; set; }
 
 	private const int expRequiredToLevelUp = 5;
     public Action<Hero> OnHeroSelected;
     public Action<Hero> OnHeroDeselected;
+	public Button Button => button;
     public bool IsSelected;
 	public bool IsAlive => Data.Health > 0;
-    
-    private void Awake()
-	{
-        Button = GetComponent<Button>();
-        image = GetComponent<Image>();
-	}
 
 	private void Start()
 	{
@@ -65,8 +60,10 @@ public class Hero : MonoBehaviour
 	private void LevelUp()
 	{
 		Data.Level++;
-		Data.Health *= 11 / 10;
-		Data.AttackPower *= 11 / 10;
+		var newHealth = Data.Health * 1.1f;
+		var newAtkPow = Data.AttackPower * 1.1f;
+		Data.Health = Mathf.RoundToInt(newHealth);
+		Data.AttackPower = Mathf.RoundToInt(newAtkPow);
 	}
 
     public void SetHeroColor(Color color)

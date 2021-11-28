@@ -27,16 +27,16 @@ RectTransform:
   m_GameObject: {fileID: 182350867961954032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 3484281493973814319}
   - {fileID: 486213386945583401}
   m_Father: {fileID: 8582676876061174824}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 75.00001}
+  m_AnchoredPosition: {x: 0, y: 85}
   m_SizeDelta: {x: 108, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5560591765455726579
@@ -280,14 +280,14 @@ RectTransform:
   m_GameObject: {fileID: 8582676874779767880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 1}
   m_Children: []
   m_Father: {fileID: 8582676876061174824}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8582676874779767883
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 68189633b0897e84a8f4f8e373332902, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0bf068c883198af4ca816af148cedc04, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -676,8 +676,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8582676874779767881}
-  - {fileID: 8582676876738964477}
   - {fileID: 9024041309798362606}
+  - {fileID: 8582676876738964477}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -783,6 +783,8 @@ MonoBehaviour:
   heroSelectedOutline: {fileID: 8582676874779767880}
   panel: {fileID: 8582676876738964479}
   healthBar: {fileID: 7827388808578788946}
+  image: {fileID: 8582676876061174828}
+  button: {fileID: 8582676876061174827}
   IsSelected: 0
 --- !u!1 &8582676876738964476
 GameObject:
@@ -820,7 +822,7 @@ RectTransform:
   - {fileID: 8582676875637161224}
   - {fileID: 8582676875430143786}
   m_Father: {fileID: 8582676876061174824}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}

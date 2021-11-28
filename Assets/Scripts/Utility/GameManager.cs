@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,12 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HeroSelectionPhaseController heroSelectionPhaseController;
     [SerializeField] private BattlePhaseController battlePhaseController;
 	[SerializeField] private BattleResultPanel battleResultPanel;
+	[SerializeField] private HeroCollectionSO heroCollection;
 
     private void Start()
     {
         heroSelectionPhaseController.BattleButton.onClick.AddListener(PrepareBattle);
 		battlePhaseController.OnBattleWon += OnBattleWon;
 		battlePhaseController.OnBattleLost += OnBattleLost;
+		battlePhaseController.OnFiveBattlesMade += AddNewHeroToCollection;
 		GameStateController.OnGameStateChanged += OnGameStateChanged;
 	}
 
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour
 				heroSelectionCanvas.alpha = 0f;
 				battleCanvas.alpha = 0f;
 				resultCanvas.alpha = 1f;
+				battlePhaseController.IncrementBattlesMadeCount();
 				break;
 			case GameState.Idle:
 				break;
@@ -63,15 +67,38 @@ public class GameManager : MonoBehaviour
 		battleResultPanel.Init(false);
 	}
 
-	private void OnBattleWon(List<Hero> obj)
+	private void OnBattleWon(List<Hero> heroes)
 	{
 		battleResultPanel.Init(true);
+		battleResultPanel.UpdateHeroStats(heroes);
+	}
+
+	private void AddNewHeroToCollection()
+	{
+		if (PlayerData.HasReachedHeroLimit)
+		{
+			return;
+		}
+		
+		var hero = GetRandomHeroFromCollection();
+		while (PlayerData.OwnedHeroIds.Contains(hero.Id))
+		{
+			hero = GetRandomHeroFromCollection();
+		}
+		
+		PlayerData.OwnedHeroes.Add(hero);
+		PlayerData.OwnedHeroIds.Add(hero.Id);
+	}
+
+	private HeroData GetRandomHeroFromCollection()
+	{
+		int index = Random.Range(0, heroCollection.Heroes.Length - 1);
+		return heroCollection.Heroes[index];
 	}
 	
-	// TODO: Reward the player with additional hero on battle win
-	// TODO: Fix next battle
 	// TODO: Add attacking effects & indicators
 	// TODO: Make enemies change each battle if the battle is won
 	// TODO: Able to save the game between sessions
 	// TODO: Touch controls on mobile
+	// TODO: Polish game visuals
 }

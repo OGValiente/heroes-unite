@@ -20,6 +20,7 @@ public class BattlePhaseController : MonoBehaviour
 	private List<Hero> aliveHeroes = new List<Hero>(3);
 	public Action<List<Hero>> OnBattleWon;
 	public Action OnBattleLost;
+	public Action OnFiveBattlesMade;
 
 	private void Start()
 	{
@@ -29,6 +30,7 @@ public class BattlePhaseController : MonoBehaviour
 
 	public void InitializeBattle(List<Hero> selectedHeroes)
 	{
+		aliveHeroes = selectedHeroes;
 		InitHeroes(selectedHeroes);
 		InitEnemy();
 
@@ -88,7 +90,6 @@ public class BattlePhaseController : MonoBehaviour
 			if (dead)
 			{
 				OnBattleWon?.Invoke(aliveHeroes);
-				GameStateController.SetGameState(GameState.Result);
 				return;
 			}
 			
@@ -108,7 +109,6 @@ public class BattlePhaseController : MonoBehaviour
 			if (aliveHeroes.Count == 0)
 			{
 				OnBattleLost?.Invoke();
-				GameStateController.SetGameState(GameState.Result);
 				return;
 			}
 			
@@ -174,6 +174,16 @@ public class BattlePhaseController : MonoBehaviour
 			default:
 				Debug.LogError("Unknown battle state!");
 				break;
+		}
+	}
+
+	public void IncrementBattlesMadeCount()
+	{
+		battlesMade++;
+		if (battlesMade == 1)
+		{
+			OnFiveBattlesMade?.Invoke();
+			battlesMade = 0;
 		}
 	}
 }
