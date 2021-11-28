@@ -87,9 +87,4 @@ public class GameManager : MonoBehaviour
 		int index = Random.Range(0, heroCollection.Heroes.Length - 1);
 		return heroCollection.Heroes[index];
 	}
-	
-	// TODO: Add attacking effects & indicators
-	// TODO: Able to save the game between sessions
-	// TODO: Touch controls on mobile
-	// TODO: Polish game visuals
 }

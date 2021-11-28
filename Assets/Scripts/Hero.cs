@@ -11,6 +11,7 @@ public class Hero : MonoBehaviour
 	[SerializeField] private Image image;
 	[SerializeField] private Button button;
 	[SerializeField] private InputController inputController;
+	[SerializeField] private DamageIndicator damageIndicator;
 
     public HeroData Data { get; set; }
 
@@ -62,7 +63,7 @@ public class Hero : MonoBehaviour
 			LevelUp();
 			Data.Experience = 0;
 		}
-    }
+	}
 
 	private void LevelUp()
 	{
@@ -124,9 +125,6 @@ public class Hero : MonoBehaviour
 			.SetEase(Ease.InBack)
 			.OnComplete(() =>
 			{
-				// TODO: Add damage dealt indicator
-				// TODO: Add strike particle/animation
-				// TODO: Add screen shake
 				enemy.OnAttacked?.Invoke(Data.AttackPower);
 				transform
 					.DOMove(oriPos, .75f)
@@ -134,6 +132,11 @@ public class Hero : MonoBehaviour
 					.SetDelay(.05f)
 					.OnComplete(() => onAnimComplete.Invoke(enemy.IsDead));
 			});
+	}
+
+	public void DisplayDamageDealt(int damage)
+	{
+		damageIndicator.DisplayDamageDealt(damage);
 	}
 
 	private void OnGameStateChanged(GameState state)

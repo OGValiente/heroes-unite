@@ -13,6 +13,8 @@ public class BattleResultPanel : MonoBehaviour
 	[SerializeField] private string loseTitle;
 	[SerializeField] private string winButtonText;
 	[SerializeField] private string loseButtonText;
+	[SerializeField] private GameObject attributesPanel;
+	[SerializeField] private List<HeroAttributeInfo> attributeInfos;
 
     public void Init(bool win)
 	{
@@ -20,6 +22,7 @@ public class BattleResultPanel : MonoBehaviour
 		GameStateController.SetGameState(GameState.Result);
 		title.text = win ? winTitle : loseTitle;
 		buttonText.text = win ? winButtonText : loseButtonText;
+		attributesPanel.SetActive(win);
 		
 		button.onClick.AddListener(() =>
 		{
@@ -30,9 +33,14 @@ public class BattleResultPanel : MonoBehaviour
 
 	public void UpdateHeroStats(List<Hero> heroes)
 	{
-		foreach (var hero in heroes)
+		for (int i = 0; i < heroes.Count; i++)
 		{
-			hero.IncrementHeroExperience();
+			// Old data doesn't stay old.
+			var oldData = heroes[i].Data;
+			heroes[i].IncrementHeroExperience();
+			var newData = heroes[i].Data;
+			
+			attributeInfos[i].SetAttributes(oldData, newData);
 		}
 	}
 

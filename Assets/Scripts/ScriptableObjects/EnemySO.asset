@@ -14,17 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - AttackPower: 10
-    Health: 3
+    Health: 50
     Color: {r: 1, g: 0, b: 0, a: 1}
-  - AttackPower: 100
-    Health: 15
+  - AttackPower: 15
+    Health: 80
     Color: {r: 1, g: 0.78035855, b: 0, a: 1}
-  - AttackPower: 30
-    Health: 35
-    Color: {r: 0.076037504, g: 0.6792453, b: 0.009611944, a: 1}
-  - AttackPower: 40
-    Health: 65
-    Color: {r: 0, g: 0.21738945, b: 0.7735849, a: 1}
-  - AttackPower: 50
+  - AttackPower: 20
     Health: 100
+    Color: {r: 0.076037504, g: 0.6792453, b: 0.009611944, a: 1}
+  - AttackPower: 25
+    Health: 150
+    Color: {r: 0, g: 0.21738945, b: 0.7735849, a: 1}
+  - AttackPower: 30
+    Health: 200
     Color: {r: 0.764151, g: 0, b: 0.7521645, a: 1}
+  - AttackPower: 40
+    Health: 250
+    Color: {r: 0.37940228, g: 0, b: 0.7647059, a: 1}
+  - AttackPower: 50
+    Health: 300
+    Color: {r: 0, g: 0, b: 0, a: 1}

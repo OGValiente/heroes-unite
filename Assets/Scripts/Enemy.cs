@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
 	[SerializeField] private HealthBar healthBar;
+	[SerializeField] private DamageIndicator damageIndicator;
 	
     public EnemyData Data { get; private set; }
     public Action<int> OnAttacked;
@@ -48,9 +49,7 @@ public class Enemy : MonoBehaviour
 			.SetEase(Ease.InBack)
 			.OnComplete(() =>
 			{
-				// TODO: Add damage dealt indicator
-				// TODO: Add strike particle/animation
-				// TODO: Add screen shake
+				hero.DisplayDamageDealt(Data.AttackPower);
 				hero.SetHeroRemainingHealth(Math.Max(0, hero.RemainingHealth - Data.AttackPower));
 				transform
 					.DOMove(oriPos, .75f)
@@ -62,6 +61,7 @@ public class Enemy : MonoBehaviour
 
 	private void OnEnemyAttacked(int damageDealt)
 	{
+		damageIndicator.DisplayDamageDealt(damageDealt);
 		remainingHealth -= damageDealt;
 		healthBar.SetRemainingHealth(remainingHealth);
 
