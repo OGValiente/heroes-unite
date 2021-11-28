@@ -43,8 +43,6 @@ public class GameManager : MonoBehaviour
 				battleCanvas.alpha = 1f;
 				break;
 			case GameState.Result:
-				heroSelectionCanvas.alpha = 0f;
-				battleCanvas.alpha = 0f;
 				resultCanvas.alpha = 1f;
 				battlePhaseController.IncrementBattlesMadeCount();
 				break;
