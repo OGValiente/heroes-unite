@@ -21,7 +21,8 @@ public class Hero : MonoBehaviour
     public Action<Hero> OnHeroDeselected;
 	public Button Button => button;
     public bool IsSelected;
-	public bool IsAlive => Data.Health > 0;
+	public bool IsAlive => RemainingHealth > 0;
+	public int RemainingHealth;
 
 	private void Start()
 	{
@@ -32,19 +33,14 @@ public class Hero : MonoBehaviour
 	public void SetHeroData(HeroData heroData)
 	{
 		Data = heroData;
-		healthBar.slider.maxValue = heroData.Health;
-		healthBar.slider.value = heroData.Health;
+		healthBar.SetMaximumHealth(heroData.Health);
 	}
 
-    public void SetHeroHealth(int health)
+    public void SetHeroRemainingHealth(int health)
     {
-        Data.Health = health;
-		healthBar.SetHealth(health);
-		
-		if (Data.Health < 1)
-		{
-			gameObject.SetActive(false);
-		}
+		RemainingHealth = health;
+		healthBar.SetRemainingHealth(health);
+		gameObject.SetActive(health > 0);
     }
 
     public void IncrementHeroExperience()
@@ -76,10 +72,7 @@ public class Hero : MonoBehaviour
     {
         if (select && IsSelected)
         {
-            IsSelected = false;
-            OnHeroDeselected?.Invoke(this);
-            heroSelectedOutline.SetActive(false);
-            panel.Disable();
+            Deselect();
             return;
         }
         
@@ -91,6 +84,14 @@ public class Hero : MonoBehaviour
             panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
         }
     }
+
+	public void Deselect()
+	{
+		IsSelected = false;
+		OnHeroDeselected?.Invoke(this);
+		heroSelectedOutline.SetActive(false);
+		panel.Disable();
+	}
 
     public void SelectInBattle(bool isSelected)
     {

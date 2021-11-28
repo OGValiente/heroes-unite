@@ -16,7 +16,7 @@ MonoBehaviour:
   - AttackPower: 10
     Health: 3
     Color: {r: 1, g: 0, b: 0, a: 1}
-  - AttackPower: 20
+  - AttackPower: 100
     Health: 15
     Color: {r: 1, g: 0.78035855, b: 0, a: 1}
   - AttackPower: 30

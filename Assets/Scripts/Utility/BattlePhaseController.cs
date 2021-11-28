@@ -42,24 +42,40 @@ public class BattlePhaseController : MonoBehaviour
 	{
 		for (int i = 0; i < heroSlots.Count; i++)
 		{
-			heroSlots[i].SetHeroData(selectedHeroes[i].Data);
-			heroSlots[i].SetHeroColor(selectedHeroes[i].Data.Color);
+			var hero = heroSlots[i];
+			hero.SetHeroData(selectedHeroes[i].Data);
+			hero.SetHeroColor(selectedHeroes[i].Data.Color);
+			hero.SetHeroRemainingHealth(selectedHeroes[i].Data.Health);
 
 			var id = selectedHeroes[i].Data.Id;
-			heroSlots[i].Button.onClick.AddListener(() =>
+			hero.Button.onClick.AddListener(() =>
 			{
 				if (BattleStateController.CurrentBattleState == BattleState.PlayerTurn)
 				{
 					HandleSelection(id);
 				}
 			});
+			
+			hero.Deselect();
+			hero.gameObject.SetActive(true);
 		}
 	}
 
 	private void InitEnemy()
 	{
-		var enemyData = enemySO.Enemies[0];
+		EnemyData enemyData;
+		if (battlesMade >= enemySO.Enemies.Length)
+		{
+			enemyData = enemySO.Enemies[Random.Range(0, battlesMade - 1)];
+		}
+		else
+		{
+			enemyData = enemySO.Enemies[battlesMade];
+		}
+		
 		enemy.SetEnemyData(enemyData);
+		enemy.SetEnemyColor(enemyData.Color);
+		enemy.gameObject.SetActive(true);
 	}
 
 	private void HandleSelection(int id)
@@ -180,10 +196,9 @@ public class BattlePhaseController : MonoBehaviour
 	public void IncrementBattlesMadeCount()
 	{
 		battlesMade++;
-		if (battlesMade == 1)
+		if (battlesMade % 5 == 0)
 		{
 			OnFiveBattlesMade?.Invoke();
-			battlesMade = 0;
 		}
 	}
 }

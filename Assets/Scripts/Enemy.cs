@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private HealthBar healthBar;
 	
     public EnemyData Data { get; private set; }
-    public Action<int> OnAttack;
     public Action<int> OnAttacked;
 
 	private Image image;
@@ -30,8 +29,8 @@ public class Enemy : MonoBehaviour
 	public void SetEnemyData(EnemyData data)
 	{
 		Data = data;
-		healthBar.slider.maxValue = data.Health;
-		healthBar.slider.value = data.Health;
+		healthBar.SetRemainingHealth(data.Health);
+		healthBar.SetMaximumHealth(data.Health);
 		remainingHealth = data.Health;
 	}
 
@@ -54,8 +53,7 @@ public class Enemy : MonoBehaviour
 				// TODO: Add damage dealt indicator
 				// TODO: Add strike particle/animation
 				// TODO: Add screen shake
-				OnAttack?.Invoke(Data.AttackPower);
-				hero.SetHeroHealth(hero.Data.Health - Data.AttackPower);
+				hero.SetHeroRemainingHealth(Math.Max(0, hero.RemainingHealth - Data.AttackPower));
 				transform
 					.DOMove(oriPos, .75f)
 					.SetEase(Ease.OutQuart)
@@ -67,7 +65,7 @@ public class Enemy : MonoBehaviour
 	private void OnEnemyAttacked(int damageDealt)
 	{
 		remainingHealth -= damageDealt;
-		healthBar.SetHealth(remainingHealth);
+		healthBar.SetRemainingHealth(remainingHealth);
 
 		if (remainingHealth < 1)
 		{

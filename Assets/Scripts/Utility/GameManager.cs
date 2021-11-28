@@ -97,8 +97,8 @@ public class GameManager : MonoBehaviour
 	}
 	
 	// TODO: Add attacking effects & indicators
-	// TODO: Make enemies change each battle if the battle is won
 	// TODO: Able to save the game between sessions
 	// TODO: Touch controls on mobile
 	// TODO: Polish game visuals
+	// TODO: Remove unused libraries
 }

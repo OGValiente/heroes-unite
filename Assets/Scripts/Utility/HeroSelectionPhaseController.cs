@@ -12,8 +12,10 @@ public class HeroSelectionPhaseController : MonoBehaviour
     [SerializeField] private Button battleButton;
 
 	private Dictionary<int, Hero> heroes = new Dictionary<int, Hero>(PlayerData.OwnedHeroes.Capacity);
+
 	private int selectionCount;
-    public List<Hero> SelectedHeroes;
+
+	public List<Hero> SelectedHeroes;
 	public Button BattleButton => battleButton;
 
     void Start()
@@ -25,6 +27,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
 	{
 		heroPrototype.gameObject.SetActive(true);
 		InitHeroes();
+		DeselectAllHeroes();
 	}
 
 	private void InitHeroes()
@@ -57,13 +60,24 @@ public class HeroSelectionPhaseController : MonoBehaviour
         }
     }
 
-    public void SetSelectionAllowance(bool allowed)
+    private void SetSelectionAllowance(bool allowed)
     {
         foreach (var hero in heroes)
         {
             hero.Value.Button.interactable = allowed ? true : hero.Value.IsSelected;
         }
     }
+
+	private void DeselectAllHeroes()
+	{
+		foreach (var hero in heroes)
+		{
+			if (hero.Value.IsSelected)
+			{
+				hero.Value.Deselect();
+			}
+		}
+	}
     
     private void OnHeroSelected(Hero hero)
     {
@@ -79,7 +93,7 @@ public class HeroSelectionPhaseController : MonoBehaviour
     private void OnHeroDeselected(Hero hero)
     {
         SelectedHeroes.Remove(hero);
-        selectionCount--;
+		selectionCount = Mathf.Max(selectionCount - 1, 0);
         if (selectionCount < 3)
         {
             battleButton.interactable = false;

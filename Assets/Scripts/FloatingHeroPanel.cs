@@ -14,11 +14,6 @@ public class FloatingHeroPanel : MonoBehaviour
     [SerializeField]
     private Text experience;
 
-    public Text Name => name;
-    public Text Level => level;
-    public Text AttackPower => attackPower;
-    public Text Experience => experience;
-
     public void Initialize(string name, int level, int attackPower, int experience)
     {
         UpdateFields(name, level, attackPower, experience);
@@ -38,17 +33,17 @@ public class FloatingHeroPanel : MonoBehaviour
 
     public void UpdateFields(string name, int level, int attackPower, int experience)
     {
-        Name.text = $"Name: {name}";
-        Level.text = $"Level: {level}";
-        AttackPower.text = $"Attack Power: {attackPower}";
-        Experience.text = $"Experience: {experience}";
+        this.name.text = $"Name: {name}";
+        this.level.text = $"Level: {level}";
+        this.attackPower.text = $"Attack Power: {attackPower}";
+        this.experience.text = $"Experience: {experience}";
     }
 
     public void ClearFields()
     {
-        Name.text = string.Empty;
-        Level.text = string.Empty;
-        AttackPower.text = string.Empty;
-        Experience.text = string.Empty;
+		this.name.text = string.Empty;
+		this.level.text = string.Empty;
+		this.attackPower.text = string.Empty;
+		this.experience.text = string.Empty;
     }
 }
