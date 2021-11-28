@@ -12,6 +12,8 @@ public class FloatingHeroPanel : MonoBehaviour
     [SerializeField]
     private Text experience;
 
+	public bool IsActive => gameObject.activeInHierarchy;
+
     public void Initialize(string name, int level, int attackPower, int experience)
     {
         UpdateFields(name, level, attackPower, experience);

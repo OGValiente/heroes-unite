@@ -10,6 +10,7 @@ public class Hero : MonoBehaviour
 	[SerializeField] private HealthBar healthBar;
 	[SerializeField] private Image image;
 	[SerializeField] private Button button;
+	[SerializeField] private InputController inputController;
 
     public HeroData Data { get; set; }
 
@@ -25,6 +26,19 @@ public class Hero : MonoBehaviour
 	{
 		healthBar.SetActive(false);
 		GameStateController.OnGameStateChanged += OnGameStateChanged;
+		
+		inputController.InputForThreeSeconds += () =>
+		{
+			panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
+		};
+		
+		inputController.InputCancelled += () =>
+		{
+			if (panel.IsActive)
+			{
+				panel.Disable();
+			}
+		};
 	}
 
 	public void SetHeroData(HeroData heroData)
@@ -77,8 +91,7 @@ public class Hero : MonoBehaviour
         {
             IsSelected = true;
             OnHeroSelected?.Invoke(this);
-            heroSelectedOutline.SetActive(true);
-            panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
+            heroSelectedOutline.SetActive(true); 
         }
     }
 
@@ -87,7 +100,6 @@ public class Hero : MonoBehaviour
 		IsSelected = false;
 		OnHeroDeselected?.Invoke(this);
 		heroSelectedOutline.SetActive(false);
-		panel.Disable();
 	}
 
     public void SelectInBattle(bool isSelected)
@@ -95,11 +107,9 @@ public class Hero : MonoBehaviour
         if (isSelected)
         {
             heroSelectedOutline.SetActive(true);
-            panel.Initialize(Data.Name, Data.Level, Data.AttackPower, Data.Experience);
         }
         else
         {
-            panel.Disable();
             heroSelectedOutline.SetActive(isSelected);
         }
     }

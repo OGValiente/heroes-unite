@@ -657,9 +657,10 @@ GameObject:
   - component: {fileID: 8582676876061174828}
   - component: {fileID: 8582676876061174827}
   - component: {fileID: 8582676876061174826}
+  - component: {fileID: 107131209084621552}
   m_Layer: 5
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -785,7 +786,21 @@ MonoBehaviour:
   healthBar: {fileID: 7827388808578788946}
   image: {fileID: 8582676876061174828}
   button: {fileID: 8582676876061174827}
+  inputController: {fileID: 107131209084621552}
   IsSelected: 0
+  RemainingHealth: 0
+--- !u!114 &107131209084621552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582676876061174823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30636392f1439e4da68abde7ba21949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8582676876738964476
 GameObject:
   m_ObjectHideFlags: 0

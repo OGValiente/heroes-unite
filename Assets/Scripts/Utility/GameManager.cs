@@ -92,5 +92,4 @@ public class GameManager : MonoBehaviour
 	// TODO: Able to save the game between sessions
 	// TODO: Touch controls on mobile
 	// TODO: Polish game visuals
-	// TODO: Remove unused libraries
 }
