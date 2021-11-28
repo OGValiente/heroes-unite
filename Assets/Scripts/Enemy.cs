@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,8 +27,8 @@ public class Enemy : MonoBehaviour
 	public void SetEnemyData(EnemyData data)
 	{
 		Data = data;
-		healthBar.SetRemainingHealth(data.Health);
 		healthBar.SetMaximumHealth(data.Health);
+		healthBar.SetRemainingHealth(data.Health);
 		remainingHealth = data.Health;
 	}
 
