@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
 	[SerializeField] private HealthBar healthBar;
 	[SerializeField] private DamageIndicator damageIndicator;
+	[SerializeField] private CanvasGroup canvasGroup;
 	
     public EnemyData Data { get; private set; }
     public Action<int> OnAttacked;
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour
 		healthBar.SetMaximumHealth(data.Health);
 		healthBar.SetRemainingHealth(data.Health);
 		remainingHealth = data.Health;
+		canvasGroup.alpha = 1f;
 	}
 
 	public void SetEnemyColor(Color color)
@@ -67,7 +69,7 @@ public class Enemy : MonoBehaviour
 
 		if (remainingHealth < 1)
 		{
-			gameObject.SetActive(false);
+			canvasGroup.DOFade(0f, 1f);
 		}
 	}
 }

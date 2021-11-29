@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 2238719693737264200}
   - component: {fileID: 2238719693737264201}
   - component: {fileID: 2492213621369760069}
+  - component: {fileID: 1388625080675159239}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -195,6 +196,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3677827429035234278}
   damageIndicator: {fileID: 1751696062616057956}
+  canvasGroup: {fileID: 1388625080675159239}
+--- !u!225 &1388625080675159239
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238719693737264194}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2881757079592675801
 GameObject:
   m_ObjectHideFlags: 0

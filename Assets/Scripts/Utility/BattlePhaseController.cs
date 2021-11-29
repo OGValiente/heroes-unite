@@ -81,7 +81,7 @@ public class BattlePhaseController : MonoBehaviour
 			var select = hero.Data.Id == id;
 			hero.SelectInBattle(select);
 
-			if (select)
+			if (select && hero.IsAlive)
 			{
 				selectedHero = hero;
 				attackButton.interactable = true;

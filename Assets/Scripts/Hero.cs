@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class Hero : MonoBehaviour
 {
+	[SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private GameObject heroSelectedOutline;
     [SerializeField] private FloatingHeroPanel panel;
 	[SerializeField] private HealthBar healthBar;
@@ -14,10 +15,10 @@ public class Hero : MonoBehaviour
 	[SerializeField] private DamageIndicator damageIndicator;
 
     public HeroData Data { get; set; }
+	public Action<Hero> OnHeroSelected;
+	public Action<Hero> OnHeroDeselected;
 
 	private const int expRequiredToLevelUp = 5;
-    public Action<Hero> OnHeroSelected;
-    public Action<Hero> OnHeroDeselected;
 	public Button Button => button;
     public bool IsSelected;
 	public bool IsAlive => RemainingHealth > 0;
@@ -52,8 +53,15 @@ public class Hero : MonoBehaviour
     {
 		RemainingHealth = health;
 		healthBar.SetRemainingHealth(health);
-		gameObject.SetActive(health > 0);
-    }
+		if (health > 0)
+		{
+			canvasGroup.alpha = 1f;
+		}
+		else
+		{
+			canvasGroup.DOFade(0f, 1f);
+		}
+	}
 
     public void IncrementHeroExperience()
 	{
